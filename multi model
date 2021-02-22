@@ -1,0 +1,81 @@
+## packages
+require(glmulti)
+require(metafor)
+require(MuMIn)
+
+rma.glmulti <- function(formula, data, ...)
+  rma(formula, vi, data=data, method="ML", ...)
+###nestdness
+res.nest <- glmulti(yi ~ System + Openness + Study.duration + Delta.temperature,random = ~ 1 | study, data=effect.size.nest,
+               level=1, fitfunction=rma.glmulti, crit="bic", confsetsize=500)
+print(res.nest)
+
+round(coef(res.nest), 3)
+
+eval(metafor:::.glmulti)
+res2=coef(res.nest)
+teste=round(coef(res.nest), 4)
+teste2=teste[,4]
+teste.res.nest=edit(teste2)
+barplot(teste.res.nest, horiz=T,xlab="Relative importance",las=2, col="black",las=2, main="Richness")
+#tunr
+res.turn<- glmulti(yi ~ System + Openness + Study.duration + Delta.temperature,random = ~ 1 | study, data=effect.size.turn,
+                    level=1, fitfunction=rma.glmulti, crit="bic", confsetsize=500)
+print(res.turn)
+
+round(coef(res.turn), 3)
+
+eval(metafor:::.glmulti)
+res2=coef(res.turn)
+teste=round(coef(res.turn), 4)
+teste2=teste[,4]
+teste.res.turn=edit(teste2)
+barplot(teste.res.turn, horiz=T,xlab="Relative importance",las=2, col="black",las=2, main="Richness")
+
+#Gradient abundnce
+res.grad<- glmulti(yi ~ System + Openness + Study.duration + Delta.temperature,random = ~ 1 | study, data=effect.size.grad,
+                   level=1, fitfunction=rma.glmulti, crit="bic", confsetsize=500)
+print(res.grad)
+
+round(coef(res.grad), 3)
+
+
+res2=coef(res.grad)
+teste=round(coef(res.grad), 4)
+teste2=teste[,4]
+teste.res.grad=edit(teste2)
+barplot(teste.res.grad, horiz=T,xlab="Relative importance",las=2, col="black",las=2, main="Richness")
+
+
+#Balance abundnce
+res.bal<- glmulti(yi ~ System + Openness + Study.duration + Delta.temperature,random = ~ 1 | study, data=effect.size.bal,
+                   level=1, fitfunction=rma.glmulti, crit="bic", confsetsize=500)
+print(res.bal)
+
+round(coef(res.bal), 3)
+
+
+res2=coef(res.bal)
+teste=round(coef(res.bal), 4)
+teste2=teste[,4]
+teste.res.bal=edit(teste2)
+barplot(teste.res.bal, horiz=T,xlab="Relative importance",las=2, col="black",las=2, main="Richness")
+
+
+
+##beta
+par(mfrow=c(2,2))
+par(mar=c(5, 6.5, 2, 2))
+barplot(teste.res.nest, horiz=T,xlab="Relative importance",las=2, col="black",las=2, main="Nestedness")
+barplot(teste.res.turn, horiz=T,xlab="Relative importance",las=2, col="black",las=2, main="Turnover")
+barplot(teste.res.grad, horiz=T,xlab="Relative importance",las=2, col="black",las=2, main="Gradient Abundance")
+barplot(teste.res.bal, horiz=T,xlab="Relative importance",las=2, col="black",las=2, main="Balanced Abundance")
+
+
+
+##Alpha
+par(mfrow=c(1,2))
+par(mar=c(5, 5, 2, 2))
+barplot(teste.res.alfa, horiz=T,xlab="Relative importance",las=2, col="black",las=2, main="Richness")
+barplot(teste.res.ens, horiz=T,xlab="Relative importance",las=2, col="black",las=2, main="ENS.Pie")
+
